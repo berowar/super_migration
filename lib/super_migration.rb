@@ -72,15 +72,15 @@ module SM
     # which inherits from ActiveRecord::Base
     # call the establish_connection method for this class
     
-    SuperMigration.current_table_from = from.to_s.singularize.capitalize
-    SM.class_eval("class #{SuperMigration.current_table_from} < ActiveRecord::Base ; establish_connection(SuperMigration.from_db_options) ; end")
+    SuperMigration.current_table_from = "From#{from.to_s.singularize.capitalize}"
+    SM.class_eval("class #{SuperMigration.current_table_from} < ActiveRecord::Base ; set_table_name :#{from}; establish_connection(SuperMigration.from_db_options); end")
     
-    # create a class with the name table[:from] in the SM module
+    # create a class with the name table[:to] in the SM module
     # which inherits from ActiveRecord::Base
     # call the establish_connection nethod for this class
     
-    SuperMigration.current_table_to = to.to_s.singularize.capitalize
-    SM.class_eval("class #{SuperMigration.current_table_to} < ActiveRecord::Base ; establish_connection(SuperMigration.to_db_options); end")
+    SuperMigration.current_table_to = "To#{to.to_s.singularize.capitalize}"
+    SM.class_eval("class #{SuperMigration.current_table_to} < ActiveRecord::Base ; set_table_name :#{to}; establish_connection(SuperMigration.to_db_options); end")
   end
   
   def table(table = {}, &block)
