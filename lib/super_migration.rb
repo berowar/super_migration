@@ -112,6 +112,7 @@ module SM
         end
       end
       new_record = Kernel.const_get(to_table).new(new_record_hash)
+      new_record.id = new_record_hash[:id] # save instance with a certain id
       new_record.save!
     end
     
